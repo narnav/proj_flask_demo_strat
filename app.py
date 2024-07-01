@@ -111,21 +111,29 @@ def create_car():
         return jsonify({'error': str(e)}), 500
 
 
-# Retrieve all cars
+# Retrieve cars of the logged-in user
 @app.route('/cars', methods=['GET'])
-def get_all_cars():
-    cars = Car.query.all()
-    car_list = []
-    for car in cars:
-        car_list.append({
-            'id': car.id,
-            'color': car.color,
-            'brand': car.brand,
-            'model': car.model,
-            'owner': car.owner  # Include owner in the response
-        })
-    return jsonify(car_list), 200
+@jwt_required()
+def get_user_cars():
+    try:
+        current_username = get_jwt_identity().get('username')
+        user_cars = Car.query.filter_by(owner=current_username).all()
+        
+        cars_list = []
+        for car in user_cars:
+            cars_list.append({
+                'id': car.id,
+                'color': car.color,
+                'brand': car.brand,
+                'model': car.model,
+                'owner': car.owner
+            })
+        
+        return jsonify(cars_list), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
+   
 
 @app.route('/login', methods=['POST'])
 def login():

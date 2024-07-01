@@ -19,3 +19,10 @@
 # login -DONE
 # create user model -DONE
 # Admin
+
+# create admin 
+{
+  "username": "admin",
+  "password": "adminpassword",
+  "role": "admin"
+}

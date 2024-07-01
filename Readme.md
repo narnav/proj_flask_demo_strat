@@ -10,3 +10,12 @@
 
 
 ## LOANS
+
+
+## Authentication
+# private -DONE
+# public -DONE
+# register -DONE
+# login -DONE
+# create user model -DONE
+# Admin
